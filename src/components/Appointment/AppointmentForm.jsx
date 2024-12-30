@@ -1,40 +1,32 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, DatePicker, Select } from 'antd';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { Form, Input, Select, DatePicker, Button } from 'antd';
 
 const { Option } = Select;
 
-const AppointmentForm = () => {
-  const [patientName, setPatientName] = useState('');
-  const [patientEmail, setPatientEmail] = useState('');
-  const [patientPhone, setPatientPhone] = useState('');
-  const [doctorSpecialty, setDoctorSpecialty] = useState('');
-  const [appointmentDate, setAppointmentDate] = useState(null);
+const AppointmentForm = ({ appointmentDate, setAppointmentDate, patientEmail, setPatientEmail, patientPhone, setPatientPhone, doctorSpecialty, setDoctorSpecialty }) => {
+  const emailInputRef = useRef(null);
 
-  const handleSubmit = () => {
-    console.log('Nombre del paciente:', patientName);
-    console.log('Email del paciente:', patientEmail);
-    console.log('Teléfono del paciente:', patientPhone);
-    console.log('Especialidad del doctor:', doctorSpecialty);
-    console.log('Fecha de la cita:', appointmentDate ? appointmentDate.format('YYYY-MM-DD') : '');
+  const focusEmailInput = () => {
+    if (emailInputRef.current) {
+      emailInputRef.current.focus();
+    }
   };
 
   return (
-    <Form
-      layout="vertical"
-      onFinish={handleSubmit}
-      style={{ maxWidth: 400, margin: '40px auto' }}
-    >
+    <Form className="section_appointment">
       <Form.Item
-        label="Nombre del paciente"
-        rules={[{ required: true, message: 'Por favor ingrese el nombre del paciente' }]}
+        label="Correo del paciente"
+        rules={[
+          { required: true, message: 'Por favor ingrese el correo del paciente' },
+          { type: 'email', message: 'Por favor ingrese un correo válido' },
+        ]}
       >
-        <Input value={patientName} onChange={(e) => setPatientName(e.target.value)} />
-      </Form.Item>
-      <Form.Item
-        label="Email del paciente"
-        rules={[{ required: true, message: 'Por favor ingrese el email del paciente' }]}
-      >
-        <Input value={patientEmail} onChange={(e) => setPatientEmail(e.target.value)} />
+        <Input
+          ref={emailInputRef}
+          value={patientEmail}
+          onChange={(e) => setPatientEmail(e.target.value)}
+        />
       </Form.Item>
       <Form.Item
         label="Teléfono del paciente"
@@ -67,12 +59,23 @@ const AppointmentForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={focusEmailInput}>
           Agendar Cita
         </Button>
       </Form.Item>
     </Form>
   );
+};
+
+AppointmentForm.propTypes = {
+  appointmentDate: PropTypes.object.isRequired,
+  setAppointmentDate: PropTypes.func.isRequired,
+  patientEmail: PropTypes.string.isRequired,
+  setPatientEmail: PropTypes.func.isRequired,
+  patientPhone: PropTypes.string.isRequired,
+  setPatientPhone: PropTypes.func.isRequired,
+  doctorSpecialty: PropTypes.string.isRequired,
+  setDoctorSpecialty: PropTypes.func.isRequired,
 };
 
 export { AppointmentForm };

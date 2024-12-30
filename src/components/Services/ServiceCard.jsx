@@ -3,6 +3,7 @@ import { Card, Row, Col } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPersonPregnant, faHospital, faHeart, faChild, faSpa, faBrain, faBaby } from '@fortawesome/free-solid-svg-icons';
 const { Meta } = Card;
+import PropTypes from 'prop-types';
 
 const iconMap = {
   pregnant_woman: faPersonPregnant,
@@ -35,5 +36,11 @@ const ServiceCard = ({ icon, title, description }) => (
     </div>
   </Card>
 );
+
+ServiceCard.propTypes = {
+  icon: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
 
 export { ServiceCard };

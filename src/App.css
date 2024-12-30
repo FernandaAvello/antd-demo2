@@ -78,7 +78,9 @@ margin-top: 30px;
 .section_homeServices {
   margin-top: -52px;
 }
-
+.section_appointment {
+  padding: 0 25% 4% 25%;
+}
 .footer {
   background-color: #EA4C89;
   color: #fff;
